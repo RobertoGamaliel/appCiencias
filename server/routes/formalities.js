@@ -1,5 +1,7 @@
 import {Router} from 'express';
 import {pool} from '../DB.js';
+import  encrypt  from '../encrypt.js';
+import decrypt from '../decrypt.js';
 
 const formalities = Router();
 
@@ -23,6 +25,8 @@ formalities.get('/formalities',async (req,res)=>{
                 "images": rows[index]["IMAGES"]
             }; 
         }
+        let resp = await encrypt("jfjfjjf");
+        console.log(resp)
         res.json(news);
     } catch (error) {
         res.status(500).json("Error");
@@ -46,7 +50,7 @@ post('/formalities',async (req,res)=>{
     try {
         const resp = await pool.execute(
         `INSERT INTO FORMALITIES (DATE, CATEGORY, STEPS, IMAGES)
-        VALUES ('${date}, ${category}', '${steps}', '${images}')`);
+        VALUES ('${date}', '${category}', '${steps}', '${images}')`);
         res.json("Ok");
     } catch (error) {
         res.status(500).json("Error");

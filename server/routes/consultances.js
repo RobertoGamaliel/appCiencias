@@ -118,4 +118,4 @@ post('/consultancies',async (req,res)=>{
 
 export default consultancies;
 
-//correo para github : difusionfc@uabc.edu.mx
+//correo para github : g,
