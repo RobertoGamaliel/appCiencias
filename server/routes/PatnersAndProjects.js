@@ -19,7 +19,7 @@ patnersAndProjects.get('/pat_proj',async (req,res)=>{
                 "project_name" : rows[index]["PROJECT_NAME"],
                 "project_description" : rows[index]["PROJECT_DESCRIPTION"],
                 "managers" : rows[index]["MANAGERS"],
-                "alumns" : rows[index]["ALUMNS"],
+                "students" : rows[index]["STUDENTS"],
                 "link" : rows[index]["LINK"],
             }; 
         }
@@ -33,7 +33,7 @@ post('/pat_proj',async (req,res)=>{
     let project_name = req.query.project_name;
     let project_description = req.query.project_description;
     let managers = req.query.managers;
-    let alumns = req.query.alumns;
+    let students = req.query.students;
     let link = req.query.link;
 
     if( date == undefined ||
@@ -41,7 +41,7 @@ post('/pat_proj',async (req,res)=>{
         project_name == undefined ||
         project_description == undefined ||
         managers == undefined ||
-        alumns == undefined || 
+        students == undefined || 
         link == undefined){
             res.status(500).json("Error");
         return;
@@ -49,11 +49,11 @@ post('/pat_proj',async (req,res)=>{
 
     try {
         const resp = await pool.execute(
-        `INSERT INTO PATNERS_AND_PROJECTS (DATE, PROJECT_NAME, PROJECT_DESCRIPTION, MANAGERS, ALUMNS, LINK)
-        VALUES ('${date}, ${project_name}', '${project_description}', '${managers}', '${alumns}', '${links}')`);
+        `INSERT INTO PATNERS_AND_PROJECTS (DATE, PROJECT_NAME, PROJECT_DESCRIPTION, MANAGERS, STUDENTS, LINK)
+        VALUES ('${date}', '${project_name}', '${project_description}', '${managers}', '${students}', '${link}')`);
         res.json("Ok");
     } catch (error) {
-        res.status(500).json("Error");
+        res.status(500).json(`"Error" ${error}`);
     }
     
     
