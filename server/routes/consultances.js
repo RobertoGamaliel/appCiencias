@@ -17,10 +17,10 @@ consultancies.get('/consultancies',async (req,res)=>{
             news[`${index}`] = {
                 "id" : rows[index]["ID"],
                 "date" : rows[index]["DATE"],
-                "matter" : rows[index]["MATTER"],
-                "mode" : rows[index]["MODE"],
+                "subject" : rows[index]["SUBJECT"],
+                "modality" : rows[index]["MODALITY"],
                 "schedule" : rows[index]["SCHEDULE"],
-                "ubication" : rows[index]["UBICATION"]
+                "location" : rows[index]["LOCARION"]
             }; 
         }
         res.json(news);
@@ -50,24 +50,24 @@ consultancies.get('/consultancies',async (req,res)=>{
 }).
 post('/consultancies',async (req,res)=>{
     let date = req.query.date;
-    let matter = req.query.matter;
-    let mode = req.query.mode;
-    let schedule = req.query.content;
-    let ubication = req.query.ubication;
+    let subject = req.query.subject;
+    let modality = req.query.modality;
+    let schedule = req.query.schedule;
+    let location = req.query.location;
 
     if( date == undefined ||
         isNaN(Date.parse(req.query.date)) ||
-        matter == undefined ||
-        mode == undefined ||
+        subject == undefined ||
+        modality == undefined ||
         schedule == undefined ||
-        ubication == undefined){
+        location == undefined ){
             res.status(500).json("Error");
         return;
     }
     try {
         const resp = await pool.execute(
-        `INSERT INTO CONSULTANCIES (DATE, MATTER, MODE, SCHEDULE, UBICATION)
-        VALUES ('${date}', '${matter}', ${mode}, '${schedule}', '${ubication}')`);
+        `INSERT INTO CONSULTANCIES (DATE, SUBJECT, MODALITY, SCHEDULE, LOCATION)
+        VALUES ('${date}', '${subject}', ${modality}, '${schedule}', '${location}')`);
         res.json("Ok");
     } catch (error) {
         res.status(500).json("Error");

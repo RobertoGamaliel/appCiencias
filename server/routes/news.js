@@ -19,7 +19,9 @@ noticias.get('/news',async (req,res)=>{
                 "date" : rows[index]["DATE"],
                 "autor" : rows[index]["AUTOR"],
                 "content" : rows[index]["CONTENT"],
-                "link" : rows[index]["LINK"]
+                "link" : rows[index]["LINK"],
+                "title" : rows[index]["TITLE"],
+                "description": rows[index]["DESCRIPTION"],
             }; 
         }
         res.json(news);
@@ -33,21 +35,25 @@ post('/news',async (req,res)=>{
     let autor = req.query.autor;
     let content = req.query.content;
     let images = req.query.content;
-    let links = req.query.links;
+    let link = req.query.link;
+    let title = req.query.title;
+    let description = req.query.description;
 
     if( date == undefined ||
         isNaN(Date.parse(req.query.date)) ||
         autor == undefined ||
         content == undefined ||
         images == undefined ||
-        links == undefined){
-            res.status(500).json("Error");
+        link == undefined ||
+        title == undefined ||
+        description == undefined){
+            res.status(500).json("Error ss");
         return;
     }
     try {
         const resp = await pool.execute(
-        `INSERT INTO news (DATE, AUTOR, CONTENT, IMGES, LINK)
-        VALUES ('${date}', '${autor}', '${content}', '${images}', '${links}')`);
+        `INSERT INTO news (DATE, AUTOR, CONTENT, IMGES, LINK, TITLE, DESCRIPTION)
+        VALUES ('${date}', '${autor}', '${content}', '${images}', '${link}', '${title}', '${description}')`);
         res.json("Ok");
     } catch (error) {
         res.status(500).json("Error");
