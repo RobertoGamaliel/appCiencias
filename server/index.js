@@ -20,6 +20,6 @@ app.use(formalities); //Endpoints de tramites
 app.use(learninigModalities); //Endpoints de modalidades de aprendizaje
 app.use(patnersAndProjects); //Endpoints de prouectos con alumnos involucrados
 app.use(socialService); //Endpoints de servicio social
-app.listen(3000 || process.env.PORT);
+app.listen(process.env.PORT);
 
 console.log(`App init in port ${PORT}`);
